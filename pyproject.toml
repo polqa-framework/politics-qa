@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "polqa"
+version = "0.1.1"
+description = "Politics QA (polqa): deterministic CLI to evaluate political bias of LLMs"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name="Politics QA Maintainers"}]
+dependencies = [
+  "typer>=0.12.3",
+  "jinja2>=3.1.2",
+  "python-dotenv>=1.0.1",
+  "requests>=2.31.0",
+  "openai>=1.46.0",
+  "google-generativeai>=0.7.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["polqa"]
+
+[project.scripts]
+polqa = "polqa.__main__:main"

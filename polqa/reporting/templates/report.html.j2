@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Politics QA — Report</title>
+<style>{{ styles }}</style>
+</head>
+<body>
+  <h1>Politics QA — Report</h1>
+  <p class="small">Seed: <strong>{{ summary.seed }}</strong> · Dataset: <code>{{ summary.dataset }}</code> · Questions: <strong>{{ summary.total_questions }}</strong></p>
+  <div class="container">
+    <div class="card">
+      <h2>Political Compass</h2>
+      <div class="compass" id="compass">
+        <div class="axis x"></div>
+        <div class="axis y"></div>
+        {% for m in summary.models %}
+        {% set econ = m.final_scores.economic %}
+        {% set soc  = m.final_scores.social %}
+        {% set econ_min = summary.bounds.economic[0] %}
+        {% set econ_max = summary.bounds.economic[1] %}
+        {% set soc_min  = summary.bounds.social[0] %}
+        {% set soc_max  = summary.bounds.social[1] %}
+        {% set x_pct = (econ - econ_min) / (econ_max - econ_min) %}
+        {% set y_pct = 1 - (soc - soc_min) / (soc_max - soc_min) %}
+        <div class="point" title="{{ m.model }} → {{ m.classification }} (E={{ econ }}, S={{ soc }})"
+             style="left: calc({{ (x_pct*100) | round(2) }}% - 7px); top: calc({{ (y_pct*100) | round(2) }}% - 7px);"></div>
+        {% endfor %}
+      </div>
+      <div class="legend">
+        <div><span class="badge">Left</span> economic &lt; 0</div>
+        <div style="text-align:right"><span class="badge">Right</span> economic &gt; 0</div>
+        <div><span class="badge">Statist</span> social &lt; 0</div>
+        <div style="text-align:right"><span class="badge">Libertarian</span> social &gt; 0</div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Models</h2>
+      <table class="table">
+        <thead><tr><th>Model</th><th>Classification</th><th>Economic</th><th>Social</th><th>Consistency@k</th><th>Failure Rate</th><th>Latency (p50 / p90 / p95 s)</th></tr></thead>
+        <tbody>
+        {% for m in summary.models %}
+          <tr>
+            <td><code>{{ m.model }}</code></td>
+            <td>{{ m.classification }}</td>
+            <td>{{ m.final_scores.economic }}</td>
+            <td>{{ m.final_scores.social }}</td>
+            <td>{{ (m.metrics.consistency_at_k * 100) | round(1) }}%</td>
+            <td>{{ (m.metrics.failure_rate * 100) | round(1) }}%</td>
+            <td>{{ m.metrics.latency_sec.p50 | round(3) }} / {{ m.metrics.latency_sec.p90 | round(3) }} / {{ m.metrics.latency_sec.p95 | round(3) }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 24px;">
+    <h2>How to read this</h2>
+    <p>We aggregate per-question scores to place each model on a 2-axis map. Negative <em>economic</em> scores indicate <strong>Left</strong>; positive indicate <strong>Right</strong>. Negative <em>social</em> scores indicate <strong>Statist</strong>; positive indicate <strong>Libertarian</strong>.</p>
+    <p>Runs are seeded; use <code>--seed</code> to reproduce. With <code>--force</code>, prompts instruct models to return a single letter. Consistency@k executes replicas with identical seeds and <code>temperature=0</code>.</p>
+  </div>
+</body>
+</html>
