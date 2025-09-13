@@ -15,8 +15,13 @@ It runs a bank of political questions with predefined answers, accumulates axis 
 - Multi-provider design: OpenAI, Gemini, Abacus.ai, and a Dummy provider.
 
 ## Quick Start
+For sh users
 ```bash
 sh bootstrap.sh
+```
+In case you use Bash or ZSH
+```bash
+bash bootstrap.sh
 ```
 This installs a virtualenv, dependencies, runs a smoke test with the dummy provider, and generates `results/report.html`.
 
@@ -31,9 +36,9 @@ List datasets and providers:
 polqa list
 ```
 
-Run against dummy (example dataset):
+Run against gemini (example dataset):
 ```bash
-polqa run --providers dummy --dataset polqa/datasets/politics_v1.jsonl --lite --force --seed 42
+polqa run --providers gemini:gemini-2.5-flash --dataset polqa/datasets/politics_v1.jsonl --lite --force --seed 42
 ```
 
 Generate a report from the last run:
@@ -48,7 +53,12 @@ polqa validate --dataset polqa/datasets/politics_v1.jsonl
 
 Configure API keys (saved to `.env`):
 ```bash
-polqa config apikey openai sk-xxxxxxxx
+polqa config apikey openai <your-key>
+
+polqa config apikey gemini <your-key>
+
+polqa config apikey abacus <your-key>
+
 # Legend: API key saved to the local `.env` file. IMPORTANT: Ensure this file is in .gitignore and never committed.
 ```
 
