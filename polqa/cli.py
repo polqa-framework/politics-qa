@@ -2,6 +2,8 @@ import json
 import secrets
 from pathlib import Path
 from typing import Optional
+from polqa.providers.claude_provider import ClaudeProvider
+from polqa.providers.claude_provider import ClaudeProvider
 
 import typer
 
@@ -20,6 +22,7 @@ _PROVIDER_ENV = {
     "openai": "OPENAI_API_KEY",
     "gemini": "GEMINI_API_KEY",
     "abacus": "ABACUS_API_KEY",
+    "claude": "CLAUDE_API_KEY",
 }
 
 @config_app.command("apikey")
@@ -50,8 +53,8 @@ def list_cmd():
     typer.echo("Datasets:")
     for p in ds:
         typer.echo(f"  - {p}")
-    typer.echo("Providers: dummy, openai:<model>, gemini:<model>, abacus:<model>")
-    typer.echo("  Examples: openai:gpt-4o, gemini:gemini-1.5-flash, abacus:route-llm")
+    typer.echo("Providers: dummy, openai:<model>, gemini:<model>, abacus:<model>, claude:<model>")
+    typer.echo("  Examples: openai:gpt-4o, gemini:gemini-1.5-flash, abacus:route-llm, claude:claude-3-5-sonnet")
 
 @app.command()
 def validate(dataset: str = typer.Option(..., "--dataset", help="Path to JSONL dataset")):
