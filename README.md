@@ -253,3 +253,4 @@ results/
 - Use `--seed` to fix sampling or ordering.
 - Use `--force` for single-letter constrained answers (A/B/C/D).
 - Keep `--providers` and `--model` identical across runs to compare results fairly.
+
