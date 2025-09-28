@@ -2,9 +2,6 @@ import json
 import secrets
 from pathlib import Path
 from typing import Optional
-from polqa.providers.claude_provider import ClaudeProvider
-from polqa.providers.claude_provider import ClaudeProvider
-
 import typer
 
 from .config import load_env, set_env_key, ENV_PATH
