@@ -50,8 +50,8 @@ def list_cmd():
     typer.echo("Datasets:")
     for p in ds:
         typer.echo(f"  - {p}")
-    typer.echo("Providers: dummy, openai:<model>, gemini:<model>, abacus:<model>, claude:<model>")
-    typer.echo("  Examples: openai:gpt-4o, gemini:gemini-1.5-flash, abacus:route-llm, claude:claude-3-5-sonnet")
+    typer.echo("Providers: dummy, openai:<model>, gemini:<model>, abacus:<model>, claude:<model>, ollama:<model>")
+    typer.echo("  Examples: openai:gpt-4o, gemini:gemini-1.5-flash, abacus:route-llm, claude:claude-3-5-sonnet, ollama:qwen3:7b")
 
 @app.command()
 def validate(dataset: str = typer.Option(..., "--dataset", help="Path to JSONL dataset")):
