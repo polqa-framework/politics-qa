@@ -73,6 +73,8 @@ echo "     polqa config apikey openai <your-key>"
 echo "     polqa config apikey gemini <your-key>"
 echo "     polqa config apikey abacus <your-key>"
 echo "     polqa config apikey claude <your-key>"
+echo "     polqa config apikey xai <your-key>"
+
 echo " "
 echo "     note: ollama does not require api-key, but you need to have the model locally installed"
 echo " "

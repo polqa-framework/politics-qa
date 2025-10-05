@@ -92,6 +92,9 @@ def get_provider_instance(spec: Dict, temperature: float = 0.0):
     elif name == "ollama":
         from ..providers.ollama_provider import OllamaProvider
         return OllamaProvider(model=model, temperature=temperature)
+    elif name == "xai":
+        from ..providers.xai_provider import XAIProvider
+        return XAIProvider(model=model, temperature=temperature)
     else:
         raise ValueError(f"Unknown provider: {name}")
 
